@@ -1,4 +1,4 @@
-.. image:: https://raw.githubusercontent.com/ClearcodeHQ/pytest-rabbitmq/master/logo.png
+.. image:: https://raw.githubusercontent.com/dbfixtures/pytest-rabbitmq/master/logo.png
     :width: 100px
     :height: 100px
     
@@ -24,12 +24,12 @@ pytest-rabbitmq
 Package status
 --------------
 
-.. image:: https://travis-ci.org/ClearcodeHQ/pytest-rabbitmq.svg?branch=v2.2.1
-    :target: https://travis-ci.org/ClearcodeHQ/pytest-rabbitmq
+.. image:: https://travis-ci.org/dbfixtures/pytest-rabbitmq.svg?branch=v2.2.1
+    :target: https://travis-ci.org/dbfixtures/pytest-rabbitmq
     :alt: Tests
 
-.. image:: https://coveralls.io/repos/ClearcodeHQ/pytest-rabbitmq/badge.png?branch=v2.2.1
-    :target: https://coveralls.io/r/ClearcodeHQ/pytest-rabbitmq?branch=v2.2.1
+.. image:: https://coveralls.io/repos/dbfixtures/pytest-rabbitmq/badge.png?branch=v2.2.1
+    :target: https://coveralls.io/r/dbfixtures/pytest-rabbitmq?branch=v2.2.1
     :alt: Coverage Status
 
 What is this?
@@ -150,4 +150,4 @@ Example usage:
 Package resources
 -----------------
 
-* Bug tracker: https://github.com/ClearcodeHQ/pytest-rabbitmq/issues
+* Bug tracker: https://github.com/dbfixtures/pytest-rabbitmq/issues
