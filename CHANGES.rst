@@ -24,14 +24,14 @@ Features
 Features
 --------
 
-- Support Python 3.12 (`#469 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/469>`_)
+- Support Python 3.12 (`#469 <https://github.com/dbfixtures/pytest-rabbitmq/issues/469>`_)
 
 
 Miscellaneus
 ------------
 
-- Update code formatting with black 24.1 (`#424 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/424>`_)
-- Drop Pipfile.lock from repository - rely on a cached/artifacted one. (`#468 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/468>`_)
+- Update code formatting with black 24.1 (`#424 <https://github.com/dbfixtures/pytest-rabbitmq/issues/424>`_)
+- Drop Pipfile.lock from repository - rely on a cached/artifacted one. (`#468 <https://github.com/dbfixtures/pytest-rabbitmq/issues/468>`_)
 
 
 3.0.2 (2023-07-05)
@@ -40,8 +40,8 @@ Miscellaneus
 Bugfixes
 --------
 
-- Fixes logdir config option reading. (`#354 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/354>`_)
-- Fixes type hints for specifying ports in Rabbitmq startup process. (`#355 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/355>`_)
+- Fixes logdir config option reading. (`#354 <https://github.com/dbfixtures/pytest-rabbitmq/issues/354>`_)
+- Fixes type hints for specifying ports in Rabbitmq startup process. (`#355 <https://github.com/dbfixtures/pytest-rabbitmq/issues/355>`_)
 
 
 3.0.1 (2023-06-16)
@@ -50,7 +50,7 @@ Bugfixes
 Bugfixes
 --------
 
-- Fixed rabbitmq entrypoint (`#349 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/349>`_)
+- Fixed rabbitmq entrypoint (`#349 <https://github.com/dbfixtures/pytest-rabbitmq/issues/349>`_)
 
 
 3.0.0 (2023-06-15)
@@ -59,41 +59,41 @@ Bugfixes
 Breaking changes
 ----------------
 
-- Add your info here (`#313 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/313>`_)
-- Dropped support for Python 3.7 (`#324 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/324>`_)
+- Add your info here (`#313 <https://github.com/dbfixtures/pytest-rabbitmq/issues/313>`_)
+- Dropped support for Python 3.7 (`#324 <https://github.com/dbfixtures/pytest-rabbitmq/issues/324>`_)
 
 
 Deprecations
 ------------
 
-- Deprecate `rabbitmq_logsdir` and `--rabbitmq-logsdir` config options. (`#266 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/266>`_)
+- Deprecate `rabbitmq_logsdir` and `--rabbitmq-logsdir` config options. (`#266 <https://github.com/dbfixtures/pytest-rabbitmq/issues/266>`_)
 
 
 Features
 --------
 
 - Use `tmp_path_factory` instead of gettempdir() manually.
-  This will allow cleaning of a temporary files. (`#266 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/266>`_)
+  This will allow cleaning of a temporary files. (`#266 <https://github.com/dbfixtures/pytest-rabbitmq/issues/266>`_)
 - Define RABBITMQ_DIST_PORT for rabbitmq.
   Added `--rabbitmq-distribution-port` to commandline and `rabbitmq_distribution_port` to ini configuration options.
 
   This will help both with macos port number limit (as by default Rabbitmk adds 20000 to the Node port to determine the port), and the port being already used error.
 
-  This port has to be different that rabbitmq port. (`#317 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/317>`_)
-- Use towncrier to manage changelog. Require Pull Requests to contain proper newsfragment. (`#319 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/319>`_)
-- Introduce typing and run mypy checks (`#324 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/324>`_)
-- Official Python 3.11 support (`#329 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/329>`_)
+  This port has to be different that rabbitmq port. (`#317 <https://github.com/dbfixtures/pytest-rabbitmq/issues/317>`_)
+- Use towncrier to manage changelog. Require Pull Requests to contain proper newsfragment. (`#319 <https://github.com/dbfixtures/pytest-rabbitmq/issues/319>`_)
+- Introduce typing and run mypy checks (`#324 <https://github.com/dbfixtures/pytest-rabbitmq/issues/324>`_)
+- Official Python 3.11 support (`#329 <https://github.com/dbfixtures/pytest-rabbitmq/issues/329>`_)
 
 
 Miscellaneus
 ------------
 
-- Upadte test pipeline to install fresh rabbitmq from apt. (`#280 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/280>`_)
-- Migrate dev dependency management to pipfile (`#320 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/320>`_)
-- Migrate automerge workflow to shared one with merger app (`#321 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/321>`_)
-- Replace pycodestyle and pydocstyle with ruff. (`#322 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/322>`_)
-- Move package configuration to pyproject.toml (`#323 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/323>`_)
-- Migrate to tbump to manage package versions (`#340 <https://github.com/ClearcodeHQ/pytest-rabbitmq/issues/340>`_)
+- Upadte test pipeline to install fresh rabbitmq from apt. (`#280 <https://github.com/dbfixtures/pytest-rabbitmq/issues/280>`_)
+- Migrate dev dependency management to pipfile (`#320 <https://github.com/dbfixtures/pytest-rabbitmq/issues/320>`_)
+- Migrate automerge workflow to shared one with merger app (`#321 <https://github.com/dbfixtures/pytest-rabbitmq/issues/321>`_)
+- Replace pycodestyle and pydocstyle with ruff. (`#322 <https://github.com/dbfixtures/pytest-rabbitmq/issues/322>`_)
+- Move package configuration to pyproject.toml (`#323 <https://github.com/dbfixtures/pytest-rabbitmq/issues/323>`_)
+- Migrate to tbump to manage package versions (`#340 <https://github.com/dbfixtures/pytest-rabbitmq/issues/340>`_)
 
 
 2.2.1
