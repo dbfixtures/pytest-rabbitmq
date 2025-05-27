@@ -12,6 +12,6 @@ mirakuru = "==2.6.0"
 [dev-packages]
 towncrier = "==24.8.0"
 pytest-cov = "==6.1.1"
-pytest-xdist = "==3.6.1"
+pytest-xdist = "==3.7.0"
 mypy = "==1.15.0"
 tbump = "==6.11.0"
