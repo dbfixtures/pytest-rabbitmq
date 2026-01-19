@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytest-rabbitmq.  If not, see <http://www.gnu.org/licenses/>.
 """Plugin definition for pytest-rabbitmq."""
+
 from tempfile import gettempdir
 
 from pytest import Parser
