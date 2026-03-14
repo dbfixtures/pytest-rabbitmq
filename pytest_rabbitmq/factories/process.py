@@ -158,9 +158,9 @@ def rabbitmq_proc(
             config["distribution_port"], [rabbit_port]
         )
         assert rabbit_distribution_port
-        assert (
-            rabbit_distribution_port != rabbit_port
-        ), "rabbit_port and distribution_port can not be the same!"
+        assert rabbit_distribution_port != rabbit_port, (
+            "rabbit_port and distribution_port can not be the same!"
+        )
 
         tmpdir = tmp_path_factory.mktemp(f"pytest-rabbitmq-{request.fixturename}")
 
