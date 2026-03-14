@@ -95,13 +95,8 @@ def rabbitmq(
 
         #. Get module and config.
         #. Connect to RabbitMQ using the parameters from config.
-
-        :param TCPExecutor rabbitmq_proc: tcp executor
-        :param FixtureRequest request: fixture request object
-        :rtype: pika.adapters.blocking_connection.BlockingConnection
-        :returns: instance of :class:`BlockingConnection`
         """
-        # load required process fixture
+        # load the required process fixture
         process = request.getfixturevalue(process_fixture_name)
 
         credentials = PlainCredentials("guest", "guest")
@@ -115,7 +110,7 @@ def rabbitmq(
         try:
             connection.close()
         except ChannelClosed as e:
-            # at this stage this exception occurs when connection is being closed
+            # at this stage this exception occurs when the connection is being closed
             logger.warning(f"ChannelClosedException occured while closing connection {e}")
 
     return rabbitmq_factory

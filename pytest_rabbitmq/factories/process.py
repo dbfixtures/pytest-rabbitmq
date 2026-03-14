@@ -22,44 +22,25 @@ from typing import (
     Any,
     Callable,
     Generator,
-    List,
-    Optional,
-    Set,
-    Tuple,
     TypedDict,
-    Union,
 )
 from warnings import warn
 
 import pytest
 from mirakuru.exceptions import ProcessExitedWithError
-from port_for import get_port
+from port_for import PortType, get_port
 from pytest import FixtureRequest, TempPathFactory
 
 from pytest_rabbitmq.factories.executor import RabbitMqExecutor
-
-PortType = Union[
-    None,
-    str,
-    int,
-    Tuple[int, int],
-    Set[int],
-    List[str],
-    List[int],
-    List[Tuple[int, int]],
-    List[Set[int]],
-    List[Union[Set[int], Tuple[int, int]]],
-    List[Union[str, int, Tuple[int, int], Set[int]]],
-]
 
 
 class RabbitMQConfig(TypedDict):
     """Pytest RabbitMQ config definition type."""
 
     host: str
-    port: PortType
-    distribution_port: PortType
-    logsdir: Optional[Path]
+    port: int | None
+    distribution_port: int | None
+    logsdir: Path | None
     server: str
     ctl: str
     node: str
@@ -90,14 +71,14 @@ def get_config(request: FixtureRequest) -> RabbitMQConfig:
 
 
 def rabbitmq_proc(
-    server: Optional[str] = None,
-    host: Optional[str] = None,
-    port: PortType = -1,
+    server: str | None = None,
+    host: str | None = None,
+    port: PortType | None = -1,
     distribution_port: PortType = -1,
-    node: Optional[str] = None,
-    ctl: Optional[str] = None,
-    logsdir: Optional[Path] = None,
-    plugindir: Optional[Path] = None,
+    node: str | None = None,
+    ctl: str | None = None,
+    logsdir: Path | None = None,
+    plugindir: Path | None = None,
 ) -> Callable[[FixtureRequest, TempPathFactory], Generator[RabbitMqExecutor, None, None]]:
     """Fixture factory for RabbitMQ process.
 
@@ -142,11 +123,7 @@ def rabbitmq_proc(
         #.  * RABBITMQ_NODENAME
         #. Start a rabbit server
             `<http://www.rabbitmq.com/man/rabbitmq-server.1.man.html>`_
-        #. Stop rabbit server and remove temporary files after tests.
-
-        :param FixtureRequest request: fixture request object
-        :rtype: pytest_rabbitmq.executors.TCPExecutor
-        :returns: tcp executor of running rabbitmq-server
+        #. Stop the rabbit server and remove temporary files after tests.
         """
         config = get_config(request)
         rabbit_ctl = ctl or config["ctl"]

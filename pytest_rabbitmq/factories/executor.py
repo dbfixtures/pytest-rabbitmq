@@ -3,7 +3,6 @@
 import re
 import subprocess
 from pathlib import Path
-from typing import List, Optional
 
 from mirakuru import TCPExecutor
 
@@ -23,7 +22,7 @@ class RabbitMqExecutor(TCPExecutor):
         logpath: Path,
         path: Path,
         plugin_path: Path,
-        node_name: Optional[str] = None,
+        node_name: str | None = None,
     ) -> None:  # pylint:disable=too-many-arguments
         """Initialize RabbitMQ executor.
 
@@ -53,13 +52,13 @@ class RabbitMqExecutor(TCPExecutor):
 
         :param list args: list of additional args to query
         """
-        ctl_command: List[str] = [self.rabbit_ctl]
+        ctl_command: list[str] = [self.rabbit_ctl]
         ctl_command.extend(args)
         return subprocess.check_output(ctl_command, env=self._popen_kwargs["env"]).decode("utf-8")
 
-    def list_exchanges(self) -> List[str]:
+    def list_exchanges(self) -> list[str]:
         """Get exchanges defined on given rabbitmq."""
-        exchanges: List[str] = []
+        exchanges: list[str] = []
         output = self.rabbitctl_output("list_exchanges", "name")
         unwanted_exchanges = ["Listing exchanges for vhost / ...", "...done."]
 
@@ -69,9 +68,9 @@ class RabbitMqExecutor(TCPExecutor):
 
         return exchanges
 
-    def list_queues(self) -> List[str]:
-        """Get queues defined on given rabbitmq."""
-        queues: List[str] = []
+    def list_queues(self) -> list[str]:
+        """Get queues defined on a given rabbitmq."""
+        queues: list[str] = []
         output = self.rabbitctl_output("list_queues", "name")
 
         for queue in output.split("\n"):
