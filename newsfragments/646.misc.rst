@@ -1,0 +1,3 @@
+Add the check-python-version-consistency pre-commit hook for pyproject.toml.
+
+This hook verifies that supported Python version declarations remain consistent.

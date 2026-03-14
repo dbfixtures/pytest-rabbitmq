@@ -22,6 +22,11 @@ repos:
       - id: detect-private-key
       - id: debug-statements
 
+  - repo: https://github.com/fizyk/pyproject-validator
+    rev: v0.1.0
+    hooks:
+    -   id: check-python-version-consistency
+
   - repo: https://github.com/psf/black-pre-commit-mirror
     rev: 26.3.0
     hooks:
