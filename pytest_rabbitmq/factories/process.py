@@ -19,10 +19,8 @@
 
 from pathlib import Path
 from typing import (
-    Any,
     Callable,
     Generator,
-    TypedDict,
 )
 from warnings import warn
 
@@ -31,43 +29,8 @@ from mirakuru.exceptions import ProcessExitedWithError
 from port_for import PortType, get_port
 from pytest import FixtureRequest, TempPathFactory
 
+from pytest_rabbitmq.config import get_config
 from pytest_rabbitmq.factories.executor import RabbitMqExecutor
-
-
-class RabbitMQConfig(TypedDict):
-    """Pytest RabbitMQ config definition type."""
-
-    host: str
-    port: int | None
-    distribution_port: int | None
-    logsdir: Path | None
-    server: str
-    ctl: str
-    node: str
-    plugindir: Path
-
-
-def get_config(request: FixtureRequest) -> RabbitMQConfig:
-    """Return a dictionary with config options."""
-
-    def get_conf_option(option: str) -> Any:
-        option_name = "rabbitmq_" + option
-        return request.config.getoption(option_name) or request.config.getini(option_name)
-
-    port = get_conf_option("port")
-    distribution_port = get_conf_option("distribution_port")
-    logsdir = get_conf_option("logsdir")
-    config: RabbitMQConfig = {
-        "host": get_conf_option("host"),
-        "port": int(port) if port else None,
-        "distribution_port": int(distribution_port) if distribution_port else None,
-        "logsdir": Path(logsdir) if logsdir else None,
-        "server": get_conf_option("server"),
-        "ctl": get_conf_option("ctl"),
-        "node": get_conf_option("node"),
-        "plugindir": Path(get_conf_option("plugindir")),
-    }
-    return config
 
 
 def rabbitmq_proc(
@@ -126,13 +89,13 @@ def rabbitmq_proc(
         #. Stop the rabbit server and remove temporary files after tests.
         """
         config = get_config(request)
-        rabbit_ctl = ctl or config["ctl"]
-        rabbit_server = server or config["server"]
-        rabbit_host = host or config["host"]
-        rabbit_port = get_port(port) or get_port(config["port"])
+        rabbit_ctl = ctl or config.ctl
+        rabbit_server = server or config.server
+        rabbit_host = host or config.host
+        rabbit_port = get_port(port) or get_port(config.port)
         assert rabbit_port
         rabbit_distribution_port = get_port(distribution_port, [rabbit_port]) or get_port(
-            config["distribution_port"], [rabbit_port]
+            config.distribution_port, [rabbit_port]
         )
         assert rabbit_distribution_port
         assert rabbit_distribution_port != rabbit_port, (
@@ -141,9 +104,9 @@ def rabbitmq_proc(
 
         tmpdir = tmp_path_factory.mktemp(f"pytest-rabbitmq-{request.fixturename}")
 
-        rabbit_plugin_path = plugindir or config["plugindir"]
+        rabbit_plugin_path = plugindir or config.plugindir
 
-        rabbit_logpath = config["logsdir"] or logsdir
+        rabbit_logpath = config.logsdir or logsdir
         if rabbit_logpath:
             warn(
                 f"rabbitmq_logsdir and --rabbitmq-logsdir config option is "
@@ -163,7 +126,7 @@ def rabbitmq_proc(
             logpath=rabbit_logpath,
             path=tmpdir,
             plugin_path=rabbit_plugin_path,
-            node_name=node or config["node"],
+            node_name=node or config.node,
         )
 
         rabbit_executor.start()
