@@ -1,0 +1,1 @@
+Drop deprecated logsdir parameter
