@@ -13,6 +13,7 @@ class RabbitMQConfig:
 
     host: str
     port: int | None
+    port_search_count: int
     distribution_port: int | None
     server: str
     ctl: str
@@ -32,6 +33,7 @@ def get_config(request: FixtureRequest) -> RabbitMQConfig:
     return RabbitMQConfig(
         host=get_conf_option("host"),
         port=int(port) if port else None,
+        port_search_count=int(get_conf_option("port_search_count")),
         distribution_port=int(distribution_port) if distribution_port else None,
         server=get_conf_option("server"),
         ctl=get_conf_option("ctl"),

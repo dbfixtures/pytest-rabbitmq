@@ -6,8 +6,10 @@ reviews:
         Validate newsfragment files:
         1. Read valid types from [tool.towncrier.type] in pyproject.toml.
         2. Filename must follow one of these patterns:
-           - `[issue_number].[type].rst` — use this when a dedicated **issue** exists in the issue tracker.
-           - `+[hash].[type].rst` — use this (orphan format) when there is NO dedicated issue. A PR alone (without a backing issue) does NOT require the numbered format; orphan is acceptable.
+           - `[issue_number].[type].rst` — standard fragment.
+           - `[issue_number].[type].[counter].rst` — multiple fragments of the same type for the same issue (counter is an integer).
+           - `+[hash].[type].rst` — orphan format when there is NO dedicated issue.
+           Do NOT flag the counter segment as invalid.
            Do NOT flag orphan fragments as incorrect when only a PR exists but no issue does.
         3. Content must be a clear, concise description of the change (not just "fix" or "update").
         4. Content should be suitable for inclusion in CHANGES.rst.
@@ -22,6 +24,9 @@ reviews:
           Check if a newsfragment file has been added to the newsfragments/ directory.
           Read the towncrier configuration from pyproject.toml to determine valid newsfragment types.
           If no newsfragment is present, suggest which type should be added based on the PR changes.
-          Suggest the filename format: [issue_or_pr_number].[type].rst (or +[hash].[type].rst for orphan fragments)
+          Suggest the filename formats:
+          - [issue_number].[type].rst
+          - [issue_number].[type].[counter].rst
+          - +[hash].[type].rst (for orphan fragments)
           Remind contributors to use: `pipenv run towncrier create [number].[type].rst` (or `pipenv run towncrier create +.[type]` for orphan fragments)
           Skip the check if the PR only updates existing newsfragments or is a trivial change.

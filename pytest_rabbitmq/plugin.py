@@ -29,6 +29,7 @@ _help_server = "RabbitMQ server path"
 _help_plugindir = "Directory where 'plugin' file is located"
 _help_host = "Host at which RabbitMQ will accept connections"
 _help_port = "Port at which RabbitMQ will accept connections"
+_help_port_search_count = "Number of times, pytest-rabbitmq will search for free port"
 _help_distribution_port = "Port at which RabbitMQ nodes will communicate with each other"
 _help_node = "Node name for rabbitmq instance"
 
@@ -36,58 +37,74 @@ _help_node = "Node name for rabbitmq instance"
 def pytest_addoption(parser: Parser) -> None:
     """Confioguration option."""
     parser.addini(name="rabbitmq_host", help=_help_host, default="127.0.0.1")
-    parser.addini(
-        name="rabbitmq_port",
-        help=_help_port,
-        default=None,
-    )
-    parser.addini(
-        name="rabbitmq_distribution_port",
-        help=_help_distribution_port,
-        default=None,
-    )
-    parser.addini(
-        name="rabbitmq_ctl",
-        help=_help_ctl,
-        default="/usr/lib/rabbitmq/bin/rabbitmqctl",
-    )
-    parser.addini(
-        name="rabbitmq_server",
-        help=_help_server,
-        default="/usr/lib/rabbitmq/bin/rabbitmq-server",
-    )
-    parser.addini(
-        name="rabbitmq_plugindir",
-        help=_help_plugindir,
-        default=gettempdir(),
-    )
-    parser.addini(
-        name="rabbitmq_node",
-        help=_help_node,
-        default=None,
-    )
-
     parser.addoption(
         "--rabbitmq-host",
         action="store",
         dest="rabbitmq_host",
         help=_help_host,
     )
+
+    parser.addini(
+        name="rabbitmq_port",
+        help=_help_port,
+        default=None,
+    )
     parser.addoption("--rabbitmq-port", action="store", dest="rabbitmq_port", help=_help_port)
+
+    parser.addini(
+        name="rabbitmq_port_search_count", type="int", help=_help_port_search_count, default=5
+    )
+    parser.addoption(
+        "--rabbitmq-port-search-count",
+        action="store",
+        type=int,
+        dest="rabbitmq_port_search_count",
+        help=_help_port_search_count,
+    )
+
+    parser.addini(
+        name="rabbitmq_distribution_port",
+        help=_help_distribution_port,
+        default=None,
+    )
     parser.addoption(
         "--rabbitmq-distribution-port",
         action="store",
         dest="rabbitmq_distribution_port",
         help=_help_distribution_port,
     )
+
+    parser.addini(
+        name="rabbitmq_ctl",
+        help=_help_ctl,
+        default="/usr/lib/rabbitmq/bin/rabbitmqctl",
+    )
     parser.addoption("--rabbitmq-ctl", action="store", dest="rabbitmq_ctl", help=_help_ctl)
+
+    parser.addini(
+        name="rabbitmq_server",
+        help=_help_server,
+        default="/usr/lib/rabbitmq/bin/rabbitmq-server",
+    )
     parser.addoption("--rabbitmq-server", action="store", dest="rabbitmq_server", help=_help_server)
+
+    parser.addini(
+        name="rabbitmq_plugindir",
+        help=_help_plugindir,
+        default=gettempdir(),
+    )
     parser.addoption(
         "--rabbitmq-plugindir",
         action="store",
         metavar="path",
         dest="rabbitmq_plugindir",
         help=_help_plugindir,
+    )
+
+    parser.addini(
+        name="rabbitmq_node",
+        help=_help_node,
+        default=None,
     )
     parser.addoption(
         "--rabbitmq-node",
