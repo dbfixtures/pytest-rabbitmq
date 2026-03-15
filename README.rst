@@ -91,6 +91,11 @@ You can pick which you prefer, but remember that these settings are handled in t
      - --rabbitmq-port
      - rabbitmq_port
      - random
+   * - Port search count
+     -
+     - --rabbitmq-port-search-count
+     - rabbitmq_port_search_count
+     - 5
    * - RABBITMQ_DIST_PORT
      - distribution_port
      - --rabbitmq-distribution-port

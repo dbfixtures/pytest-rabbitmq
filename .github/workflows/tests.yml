@@ -36,12 +36,12 @@ jobs:
       uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.3
       with:
         python-version: ${{ matrix.python-version }}
-        command: pytest -n 0 --cov-report=xml
+        command: pytest -p no:xdist --cov-report=xml
         allow-prereleases: true
     - name: Run xdist test
       uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.3
       with:
-        command: pytest -n 1 --cov-report=xml:coverage-xdist.xml
+        command: pytest -n auto --max-worker-restart=0 --cov-report=xml:coverage-xdist.xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5.5.2
       with:

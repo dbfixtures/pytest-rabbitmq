@@ -21,15 +21,25 @@ from pathlib import Path
 from typing import (
     Callable,
     Generator,
+    Iterable,
 )
 
 import pytest
 from mirakuru.exceptions import ProcessExitedWithError
-from port_for import PortType, get_port
+from port_for import PortForException, PortType, get_port
 from pytest import FixtureRequest, TempPathFactory
 
-from pytest_rabbitmq.config import get_config
+from pytest_rabbitmq.config import RabbitMQConfig, get_config
 from pytest_rabbitmq.factories.executor import RabbitMqExecutor
+
+
+def _rabbit_port(
+    port: PortType | None, config: RabbitMQConfig, excluded_ports: Iterable[int]
+) -> int:
+    """User specified port, otherwise find an unused port from config."""
+    rabbit_port = get_port(port, excluded_ports) or get_port(config.port, excluded_ports)
+    assert rabbit_port is not None
+    return rabbit_port
 
 
 def rabbitmq_proc(
@@ -89,8 +99,36 @@ def rabbitmq_proc(
         rabbit_ctl = ctl or config.ctl
         rabbit_server = server or config.server
         rabbit_host = host or config.host
-        rabbit_port = get_port(port) or get_port(config.port)
-        assert rabbit_port
+
+        port_path = tmp_path_factory.getbasetemp()
+        if hasattr(request.config, "workerinput"):
+            port_path = tmp_path_factory.getbasetemp().parent
+
+        n = 0
+        used_ports: set[int] = set()
+        while True:
+            try:
+                rabbit_port = _rabbit_port(port, config, used_ports)
+                port_filename_path = port_path / f"rabbit-{rabbit_port}.port"
+                if rabbit_port in used_ports:
+                    raise PortForException(
+                        f"Port {rabbit_port} already in use, "
+                        f"probably by other instances of the test. "
+                        f"{port_filename_path} is already used."
+                    )
+                used_ports.add(rabbit_port)
+                with (port_filename_path).open("x") as port_file:
+                    port_file.write(f"rabbit_port {rabbit_port}\n")
+                break
+            except FileExistsError:
+                n += 1
+                if n >= config.port_search_count:
+                    raise PortForException(
+                        f"Attempted {n} times to select ports. "
+                        f"All attempted ports: {', '.join(map(str, used_ports))} are already "
+                        f"in use, probably by other instances of the test."
+                    ) from None
+
         rabbit_distribution_port = get_port(distribution_port, [rabbit_port]) or get_port(
             config.distribution_port, [rabbit_port]
         )
