@@ -22,7 +22,6 @@ from typing import (
     Callable,
     Generator,
 )
-from warnings import warn
 
 import pytest
 from mirakuru.exceptions import ProcessExitedWithError
@@ -40,7 +39,6 @@ def rabbitmq_proc(
     distribution_port: PortType = -1,
     node: str | None = None,
     ctl: str | None = None,
-    logsdir: Path | None = None,
     plugindir: Path | None = None,
 ) -> Callable[[FixtureRequest, TempPathFactory], Generator[RabbitMqExecutor, None, None]]:
     """Fixture factory for RabbitMQ process.
@@ -64,7 +62,6 @@ def rabbitmq_proc(
                           on the port number, so multiple nodes are not
                           clustered)
     :param ctl: path to rabbitmqctl file
-    :param logsdir: path to log directory
 
     :returns pytest fixture with RabbitMQ process executor
     """
@@ -106,16 +103,7 @@ def rabbitmq_proc(
 
         rabbit_plugin_path = plugindir or config.plugindir
 
-        rabbit_logpath = config.logsdir or logsdir
-        if rabbit_logpath:
-            warn(
-                f"rabbitmq_logsdir and --rabbitmq-logsdir config option is "
-                f"deprecated, and will be dropped in future releases. "
-                f"All fixture related data resides within {tmpdir}",
-                DeprecationWarning,
-            )
-        if not rabbit_logpath:
-            rabbit_logpath = tmpdir / "logs"
+        rabbit_logpath = tmpdir / "logs"
 
         rabbit_executor = RabbitMqExecutor(
             rabbit_server,

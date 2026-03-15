@@ -1,0 +1,1 @@
+Fix helptext for plugindir ini parameter.

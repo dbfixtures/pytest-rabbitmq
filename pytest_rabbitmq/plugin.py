@@ -26,7 +26,6 @@ from pytest_rabbitmq import factories
 # pylint:disable=invalid-name
 _help_ctl = "RabbitMQ ctl path"
 _help_server = "RabbitMQ server path"
-_help_logsdir = "Logs directory location"
 _help_plugindir = "Directory where 'plugin' file is located"
 _help_host = "Host at which RabbitMQ will accept connections"
 _help_port = "Port at which RabbitMQ will accept connections"
@@ -58,13 +57,8 @@ def pytest_addoption(parser: Parser) -> None:
         default="/usr/lib/rabbitmq/bin/rabbitmq-server",
     )
     parser.addini(
-        name="rabbitmq_logsdir",
-        help=_help_logsdir,
-        default=None,
-    )
-    parser.addini(
         name="rabbitmq_plugindir",
-        help=_help_logsdir,
+        help=_help_plugindir,
         default=gettempdir(),
     )
     parser.addini(
@@ -88,13 +82,6 @@ def pytest_addoption(parser: Parser) -> None:
     )
     parser.addoption("--rabbitmq-ctl", action="store", dest="rabbitmq_ctl", help=_help_ctl)
     parser.addoption("--rabbitmq-server", action="store", dest="rabbitmq_server", help=_help_server)
-    parser.addoption(
-        "--rabbitmq-logsdir",
-        action="store",
-        metavar="path",
-        dest="rabbitmq_logsdir",
-        help=_help_logsdir,
-    )
     parser.addoption(
         "--rabbitmq-plugindir",
         action="store",

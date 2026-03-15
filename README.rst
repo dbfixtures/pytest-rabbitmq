@@ -56,7 +56,7 @@ You can also create additional rabbitmq client and process fixtures if you'd nee
     from pytest_rabbitmq import factories
 
     rabbitmq_my_proc = factories.rabbitmq_proc(
-        port=None, logsdir='/tmp')
+        port=None)
     rabbitmq_my = factories.rabbitmq('rabbitmq_my_proc')
 
 .. note::
@@ -106,11 +106,6 @@ You can pick which you prefer, but remember that these settings are handled in t
      - --rabbitmq-server
      - rabbitmq_server
      - /usr/lib/rabbitmq/bin/rabbitmq-server
-   * - Log directory location
-     - logsdir
-     - --rabbitmq-logsdir
-     - rabbitmq_logsdir
-     - $TMPDIR
    * - Plugin directory location
      - plugin_path
      - --rabbitmq-plugindir
