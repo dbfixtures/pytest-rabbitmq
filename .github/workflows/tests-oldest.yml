@@ -1,4 +1,4 @@
-name: Run tests
+name: Run tests with oldest supported dependencies
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  tests:
+  tests-oldest:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -28,16 +28,23 @@ jobs:
     - name: Install RabbitMQ
       run: |
         sudo apt-get install -y rabbitmq-server
-    - name: Run test
-      uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.3
+    - name: Setup python
+      uses: fizyk/actions-reuse/.github/actions/pipenv-setup@v4.4.3
       with:
         python-version: ${{ matrix.python-version }}
-        command: pytest -p no:xdist --cov-report=xml
         allow-prereleases: true
+    - name: Install oldest dependencies
+      uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.3
+      with:
+        command: pip install -r oldest/requirements.txt
+    - name: Run test
+      uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.3
+      with:
+        command: pytest -c pyproject.oldest.toml -p no:xdist --cov-report=xml
     - name: Run xdist test
       uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.3
       with:
-        command: pytest -n auto --max-worker-restart=0 --cov-report=xml:coverage-xdist.xml
+        command: pytest -c pyproject.oldest.toml -n auto --max-worker-restart=0 --cov-report=xml:coverage-xdist.xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5.5.2
       with:
