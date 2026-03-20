@@ -1,0 +1,1 @@
+Documented the pytest-rabbitmq plugin architecture with a new sequence diagram.

@@ -1,0 +1,18 @@
+sequenceDiagram
+    autonumber
+    participant Pytest as Pytest runner
+    participant ProcFactory as rabbitmq_proc fixture (session)
+    participant RabbitProcess as RabbitMQ process
+    participant ClientFactory as rabbitmq fixture (function)
+    participant RabbitMQ as RabbitMQ broker
+
+    Pytest->>ProcFactory: request rabbitmq_proc
+    ProcFactory->>RabbitProcess: start process
+    loop per test
+        Pytest->>ClientFactory: request rabbitmq connection
+        ClientFactory->>RabbitProcess: open AMQP connection
+        Pytest->>RabbitMQ: run test using queues/exchanges
+        Pytest->>RabbitMQ: teardown: delete non-amq.* queues/exchanges
+        Pytest->>ClientFactory: close client
+    end
+    ProcFactory->>RabbitProcess: stop process (end of session)

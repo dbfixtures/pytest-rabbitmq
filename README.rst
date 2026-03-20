@@ -38,6 +38,10 @@ What is this?
 This is a pytest plugin, that enables you to test your code that relies on a running RabbitMQ Queues.
 It allows you to specify additional fixtures for RabbitMQ process and client.
 
+.. image:: https://raw.githubusercontent.com/dbfixtures/pytest-rabbitmq/main/docs/images/architecture.svg
+    :alt: Project Architecture Diagram
+    :align: center
+
 How to use
 ==========
 
