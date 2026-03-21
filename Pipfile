@@ -8,10 +8,11 @@ pytest = "==9.0.2"
 pika = "==1.3.2"
 port-for = "==1.0.0"
 mirakuru = "==3.0.2"
+pytest-rabbitmq = {path = ".", editable = true}
 
 [dev-packages]
 towncrier = "==25.8.0"
-pytest-cov = "==7.0.0"
+coverage = {version = "==7.13.4", extras = ["toml"]}
 pytest-xdist = "==3.8.0"
 mypy = "==1.19.1"
 tbump = "==6.11.0"
