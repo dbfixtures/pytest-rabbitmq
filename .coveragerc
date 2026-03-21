@@ -1,2 +1,7 @@
 [run]
-source = pytest_rabbitmq
+concurrency = multiprocessing
+parallel = true
+patch = subprocess
+include =
+    */pytest_rabbitmq/*
+    */tests/*
