@@ -39,11 +39,9 @@ jobs:
         command: pip install -r oldest/requirements.txt
     - name: Run test
       uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.4
-      env:
-        COVERAGE_PROCESS_START: .coveragerc
-        COVERAGE_FILE: .coverage.oldest.serial
       with:
         command: python -m coverage run -m pytest -c pyproject.oldest.toml -p no:xdist
+        env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
     - name: Combine and export serial coverage
       if: always()
       uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.4
@@ -53,11 +51,9 @@ jobs:
         command: python -m coverage combine || true && python -m coverage xml -o coverage-oldest-serial.xml || true
     - name: Run xdist test
       uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.4
-      env:
-        COVERAGE_PROCESS_START: .coveragerc
-        COVERAGE_FILE: .coverage.oldest.xdist
       with:
         command: python -m coverage run -m pytest -c pyproject.oldest.toml -n auto --max-worker-restart=0
+        env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.xdist"}'
     - name: Combine and export xdist coverage
       if: always()
       uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.4
