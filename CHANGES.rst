@@ -3,6 +3,60 @@ CHANGELOG
 
 .. towncrier release notes start
 
+pytest-rabbitmq 4.0.0 (2026-03-22)
+==================================
+
+Breaking changes
+----------------
+
+- Converted RabbitMQ config from a TypedDict to a frozen dataclass. (`#640 <https://github.com/dbfixtures/pytest-rabbitmq/issues/640>`_)
+- Drop support for Python 3.9 (`#647 <https://github.com/dbfixtures/pytest-rabbitmq/issues/647>`_)
+- Drop deprecated logsdir parameter
+
+
+Features
+--------
+
+- Improved xdist compatibility by introducing port-locking mechanism.
+
+  If one worker claims a port, it locks it, and other xdist workers
+  either try another port or raise a clear error message. (`#642 <https://github.com/dbfixtures/pytest-rabbitmq/issues/642>`_)
+- Add `--rabbitmq-port-search-count` option - it tells how many times `pytest-rabbitmq` attempts to find unused port until it gives up.
+  Useful for xdist tests. (`#642 <https://github.com/dbfixtures/pytest-rabbitmq/issues/642>`_)
+- Add support for Python 3.14 (`#647 <https://github.com/dbfixtures/pytest-rabbitmq/issues/647>`_)
+
+
+Bugfixes
+--------
+
+- Fix helptext for plugindir ini parameter.
+
+
+Documentation
+-------------
+
+- Documented the pytest-rabbitmq plugin architecture with a new sequence diagram. (`#645 <https://github.com/dbfixtures/pytest-rabbitmq/issues/645>`_)
+- Improved README onboarding and clarity: added prerequisites and a quickstart for the first test, clarified fixture cleanup behavior, and polished grammar/command consistency.
+
+
+Miscellaneus
+------------
+
+- Updated workflows to actions-reuse 4.1.1 (`#621 <https://github.com/dbfixtures/pytest-rabbitmq/issues/621>`_)
+- Replace black with ruff-format (`#643 <https://github.com/dbfixtures/pytest-rabbitmq/issues/643>`_)
+- Add test plan testing against the oldest supported dependencies versions. (`#644 <https://github.com/dbfixtures/pytest-rabbitmq/issues/644>`_)
+- Add the check-python-version-consistency pre-commit hook for pyproject.toml.
+
+  This hook verifies that supported Python version declarations remain consistent. (`#646 <https://github.com/dbfixtures/pytest-rabbitmq/issues/646>`_)
+- Add release workflow to automate release process (`#648 <https://github.com/dbfixtures/pytest-rabbitmq/issues/648>`_)
+- Update pytest options to be toml native (`#664 <https://github.com/dbfixtures/pytest-rabbitmq/issues/664>`_)
+- Adjust links after repository transfer
+- Adjust workflows for actions-reuse 3
+- Improve reliability of Coverage reporting on CI
+- Install as editable package on CI, instead of import plugin to the test conftest file.
+- Use pre-commit for maintaining code style and linting
+
+
 3.1.1 (2024-10-15)
 ==================
 

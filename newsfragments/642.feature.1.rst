@@ -1,2 +1,0 @@
-Add `--rabbitmq-port-search-count` option - it tells how many times `pytest-rabbitmq` attempts to find unused port until it gives up.
-Useful for xdist tests.
