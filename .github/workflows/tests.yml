@@ -29,6 +29,7 @@ jobs:
       run: |
         sudo apt-get install -y rabbitmq-server
     - name: Run test
+      id: run_serial_tests
       uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.4
       with:
         python-version: ${{ matrix.python-version }}
@@ -36,24 +37,23 @@ jobs:
         allow-prereleases: true
         env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
     - name: Combine and export serial coverage
-      if: always()
-      uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.4
-      env:
-        COVERAGE_FILE: .coverage.serial
+      if: ${{ always() && (steps.run_serial_tests.conclusion == 'success' || steps.run_serial_tests.conclusion == 'failure') }}
+      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.4
       with:
-        command: python -m coverage combine || true && python -m coverage xml -o coverage-serial.xml || true
+        data-file: .coverage.serial
+        output-file: coverage-serial.xml
     - name: Run xdist test
+      id: run_xdist_tests
       uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.4
       with:
         command: python -m coverage run -m pytest -n auto --max-worker-restart=0
         env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.xdist"}'
     - name: Combine and export xdist coverage
-      if: always()
-      uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.4
-      env:
-        COVERAGE_FILE: .coverage.xdist
+      if: ${{ always() && (steps.run_xdist_tests.conclusion == 'success' || steps.run_xdist_tests.conclusion == 'failure') }}
+      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.4
       with:
-        command: python -m coverage combine || true && python -m coverage xml -o coverage-xdist.xml || true
+        data-file: .coverage.xdist
+        output-file: coverage-xdist.xml
     - name: Upload coverage to Codecov
       if: always()
       uses: codecov/codecov-action@v5.5.2

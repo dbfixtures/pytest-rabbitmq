@@ -38,34 +38,34 @@ jobs:
       with:
         command: pip install -r oldest/requirements.txt
     - name: Run test
+      id: run_serial_tests
       uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.4
       with:
         command: python -m coverage run -m pytest -c pyproject.oldest.toml -p no:xdist
         env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
     - name: Combine and export serial coverage
-      if: always()
-      uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.4
-      env:
-        COVERAGE_FILE: .coverage.oldest.serial
+      if: ${{ always() && (steps.run_serial_tests.conclusion == 'success' || steps.run_serial_tests.conclusion == 'failure') }}
+      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.4
       with:
-        command: python -m coverage combine || true && python -m coverage xml -o coverage-oldest-serial.xml || true
+        data-file: .coverage.serial
+        output-file: coverage-serial.xml
     - name: Run xdist test
+      id: run_xdist_tests
       uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.4
       with:
         command: python -m coverage run -m pytest -c pyproject.oldest.toml -n auto --max-worker-restart=0
         env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.xdist"}'
     - name: Combine and export xdist coverage
-      if: always()
-      uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.4
-      env:
-        COVERAGE_FILE: .coverage.oldest.xdist
+      if: ${{ always() && (steps.run_xdist_tests.conclusion == 'success' || steps.run_xdist_tests.conclusion == 'failure') }}
+      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.4
       with:
-        command: python -m coverage combine || true && python -m coverage xml -o coverage-oldest-xdist.xml || true
+        data-file: .coverage.xdist
+        output-file: coverage-xdist.xml
     - name: Upload coverage to Codecov
       if: always()
       uses: codecov/codecov-action@v5.5.2
       with:
-        files: coverage-oldest-serial.xml,coverage-oldest-xdist.xml
+        files: coverage-serial.xml,coverage-xdist.xml
         flags: linux
         env_vars: OS,PYTHON
         fail_ci_if_error: false
