@@ -21,22 +21,11 @@ pytest-rabbitmq
     :target: https://pypi.python.org/pypi/pytest-rabbitmq/
     :alt: License
 
-Package status
---------------
-
-.. image:: https://travis-ci.org/dbfixtures/pytest-rabbitmq.svg?branch=v2.2.1
-    :target: https://travis-ci.org/dbfixtures/pytest-rabbitmq
-    :alt: Tests
-
-.. image:: https://coveralls.io/repos/dbfixtures/pytest-rabbitmq/badge.png?branch=v2.2.1
-    :target: https://coveralls.io/r/dbfixtures/pytest-rabbitmq?branch=v2.2.1
-    :alt: Coverage Status
-
 What is this?
 =============
 
-This is a pytest plugin, that enables you to test your code that relies on a running RabbitMQ Queues.
-It allows you to specify additional fixtures for RabbitMQ process and client.
+A pytest plugin for tests that require a running RabbitMQ broker.
+It provides process and client fixtures.
 
 .. image:: https://raw.githubusercontent.com/dbfixtures/pytest-rabbitmq/main/docs/images/architecture.svg
     :alt: Project Architecture Diagram
@@ -45,14 +34,14 @@ It allows you to specify additional fixtures for RabbitMQ process and client.
 How to use
 ==========
 
-Plugin contains two fixtures
+The plugin contains two fixtures:
 
-* **rabbitmq** - it's a client fixture that has functional scope. After each test, it cleans RabbitMQ, cleans queues and exchanges for more reliable tests.
-* **rabbitmq_proc** - session scoped fixture, that starts RabbitMQ instance at it's first use and stops at the end of the tests.
+* **rabbitmq** - it is a client fixture with function scope. After each test, it removes queues and exchanges created during the test to keep tests isolated and reliable.
+* **rabbitmq_proc** - a session-scoped fixture that starts a RabbitMQ instance at its first use and stops it at the end of the test session.
 
-Simply include one of these fixtures into your tests fixture list.
+Simply include one of these fixtures in your test fixture list.
 
-You can also create additional rabbitmq client and process fixtures if you'd need to:
+You can also create additional RabbitMQ client and process fixtures if you need to:
 
 
 .. code-block:: python
@@ -65,16 +54,53 @@ You can also create additional rabbitmq client and process fixtures if you'd nee
 
 .. note::
 
-    Each RabbitMQ process fixture can be configured in a different way than the others through the fixture factory arguments.
+    Each RabbitMQ process fixture can be configured differently using fixture factory arguments.
+
+Prerequisites
+-------------
+
+Install RabbitMQ on the machine where tests are executed.
+The plugin starts a local RabbitMQ process and uses ``rabbitmq-server`` and
+``rabbitmqctl`` binaries.
+
+By default, binary paths are set to typical Linux locations:
+
+* ``/usr/lib/rabbitmq/bin/rabbitmq-server``
+* ``/usr/lib/rabbitmq/bin/rabbitmqctl``
+
+If your environment uses different paths, override them with fixture arguments,
+command-line options, or ``pytest.ini`` settings described below.
+
+Quickstart: first test
+----------------------
+
+Install the plugin:
+
+.. code-block:: shell
+
+    pip install pytest-rabbitmq
+
+Create a test that uses the built-in fixture:
+
+.. code-block:: python
+
+    def test_rabbitmq_fixture_available(rabbitmq):
+        assert rabbitmq is not None
+
+Run your tests:
+
+.. code-block:: shell
+
+    pytest -q
 
 Configuration
 =============
 
-You can define your settings in three ways, it's fixture factory argument, command line option and pytest.ini configuration option.
+You can define settings in three ways: fixture factory argument, command-line option, and ``pytest.ini`` configuration option.
 You can pick which you prefer, but remember that these settings are handled in the following order:
 
     * ``Fixture factory argument``
-    * ``Command line option``
+    * ``Command-line option``
     * ``Configuration option in your pytest.ini file``
 
 .. list-table:: Configuration options
@@ -82,7 +108,7 @@ You can pick which you prefer, but remember that these settings are handled in t
 
    * - RabbitMQ option
      - Fixture factory argument
-     - Command line option
+     - Command-line option
      - pytest.ini option
      - Default
    * - host
@@ -129,20 +155,20 @@ You can pick which you prefer, but remember that these settings are handled in t
 
 Example usage:
 
-* pass it as an argument in your own fixture
+* Pass it as an argument in your own fixture.
 
     .. code-block:: python
 
         rabbitmq_proc = factories.rabbitmq_proc(port=8888)
 
-* use ``--rabbitmq-port`` command line option when you run your tests
+* Use the ``--rabbitmq-port`` command-line option when you run your tests.
 
     .. code-block::
 
-        py.test tests --rabbitmq-port=8888
+        pytest tests --rabbitmq-port=8888
 
 
-* specify your port as ``rabbitmq_port`` in your ``pytest.ini`` file.
+* Specify your port as ``rabbitmq_port`` in your ``pytest.ini`` file.
 
     To do so, put a line like the following under the ``[pytest]`` section of your ``pytest.ini``:
 
