@@ -56,7 +56,7 @@ jobs:
         output-file: coverage-xdist.xml
     - name: Upload coverage to Codecov
       if: always()
-      uses: codecov/codecov-action@v5.5.2
+      uses: codecov/codecov-action@v6.0.0
       with:
         files: coverage-serial.xml,coverage-xdist.xml
         flags: linux
