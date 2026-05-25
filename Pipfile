@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 pytest = "==9.0.3"
-pika = "==1.4.0"
+pika = "==1.4.1"
 port-for = "==1.0.0"
 mirakuru = "==3.0.2"
 pytest-rabbitmq = {path = ".", editable = true}
