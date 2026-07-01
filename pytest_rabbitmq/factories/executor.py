@@ -1,5 +1,6 @@
 """RabbitMQ Executor."""
 
+import os
 import re
 import subprocess
 from pathlib import Path
@@ -31,7 +32,7 @@ class RabbitMqExecutor(TCPExecutor):
         :param port: port under which rabbitmq runs
         :param rabbit_ctl: rabbitctl location
         :param logpath:
-        :param path: Path containing rabbitmq'a mnesia na plugins
+        :param path: Path containing rabbitmq's mnesia and plugins
         :param node_name: RabbitMQ node name
         """
         envvars = {
@@ -44,6 +45,11 @@ class RabbitMqExecutor(TCPExecutor):
             # at different ports will work separately instead of clustering.
             "RABBITMQ_NODENAME": node_name or f"rabbitmq-test-{port}",
         }
+        # RabbitMQ (Erlang runtime) requires HOME to be set.
+        # In environments like tox, HOME is stripped from the environment.
+        # Set HOME to the temporary directory if it is not already set.
+        if "HOME" not in os.environ:
+            envvars["HOME"] = str(path)
         super().__init__(command, host, port, timeout=60, envvars=envvars)
         self.rabbit_ctl = rabbit_ctl
 
