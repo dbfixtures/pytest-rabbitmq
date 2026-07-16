@@ -12,7 +12,7 @@ pytest-rabbitmq = {path = ".", editable = true}
 
 [dev-packages]
 towncrier = "==25.8.0"
-coverage = {version = "==7.15.1", extras = ["toml"]}
+coverage = {version = "==7.15.2", extras = ["toml"]}
 pytest-xdist = "==3.8.0"
 mypy = "==2.3.0"
 tbump = "==6.11.0"
