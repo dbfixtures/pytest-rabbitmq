@@ -16,10 +16,11 @@ jobs:
     env:
       OS: ubuntu-latest
       PYTHON: ${{ matrix.python-version }}
+      UV_NO_SYNC: "1"
     steps:
     - uses: actions/checkout@v6
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v6
+    - name: Set up uv with python ${{ matrix.python-version }}
+      uses: fizyk/actions-reuse/.github/actions/uv-setup@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
       with:
         python-version: ${{ matrix.python-version }}
     - name: Update apt
@@ -28,37 +29,21 @@ jobs:
     - name: Install RabbitMQ
       run: |
         sudo apt-get install -y rabbitmq-server
-    - name: Setup python
-      uses: fizyk/actions-reuse/.github/actions/pipenv-setup@v4.4.7
+    - name: Install oldest supported versions
+      uses: fizyk/actions-reuse/.github/actions/uv-pip@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
       with:
-        python-version: ${{ matrix.python-version }}
-        allow-prereleases: true
-    - name: Install oldest dependencies
-      uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.7
+        requirements: oldest/requirements.txt
+    - name: Run tests without xdist
+      uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
       with:
-        command: pip install -r oldest/requirements.txt
-    - name: Run test
-      id: run_serial_tests
-      uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.7
-      with:
-        command: python -m coverage run -m pytest -c pyproject.oldest.toml -p no:xdist
-        env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
-    - name: Combine and export serial coverage
-      if: ${{ always() && (steps.run_serial_tests.conclusion == 'success' || steps.run_serial_tests.conclusion == 'failure') }}
-      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.7
-      with:
+        pytest-opts: -c pyproject.oldest.toml -p no:xdist
         data-file: .coverage.serial
         output-file: coverage-serial.xml
     - name: Run xdist test
-      id: run_xdist_tests
-      uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.7
+      uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
       with:
-        command: python -m coverage run -m pytest -c pyproject.oldest.toml -n auto --max-worker-restart=0
-        env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.xdist"}'
-    - name: Combine and export xdist coverage
-      if: ${{ always() && (steps.run_xdist_tests.conclusion == 'success' || steps.run_xdist_tests.conclusion == 'failure') }}
-      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.7
-      with:
+        pytest-opts: -c pyproject.oldest.toml -n auto --max-worker-restart=0
+        coverage-config: .coveragerc
         data-file: .coverage.xdist
         output-file: coverage-xdist.xml
     - name: Upload coverage to Codecov
