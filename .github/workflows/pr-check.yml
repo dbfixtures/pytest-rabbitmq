@@ -4,6 +4,12 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions: {}
+
 jobs:
   pr-check:
-    uses: fizyk/actions-reuse/.github/workflows/shared-pr-check.yml@v4.4.7
+    permissions:
+      contents: read
+    uses: fizyk/actions-reuse/.github/workflows/shared-pr-check.yml@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
+    with:
+      dependency-manager: 'uv'
