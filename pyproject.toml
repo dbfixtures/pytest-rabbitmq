@@ -51,14 +51,14 @@ pytest_rabbitmq = "pytest_rabbitmq.plugin"
 
 [dependency-groups]
 dev = [
-    "pytest==9.1.1",
-    "towncrier==25.8.0",
     "coverage==7.16.1",
-    "pytest-xdist==3.8.0",
+    "mirakuru==3.0.2",
     "mypy==2.3.1; implementation_name=='cpython'",
     "pika==1.4.4",
     "port-for==1.0.0",
-    "mirakuru==3.0.2",
+    "pytest==9.1.1",
+    "pytest-xdist==3.8.0",
+    "towncrier==25.8.0",
 ]
 release = [
     "tbump==6.11.0",

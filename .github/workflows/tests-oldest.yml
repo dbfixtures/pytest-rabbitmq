@@ -16,6 +16,7 @@ jobs:
     env:
       OS: ubuntu-latest
       PYTHON: ${{ matrix.python-version }}
+      UV_NO_SYNC: "1"
     steps:
     - uses: actions/checkout@v6
     - name: Set up uv with python ${{ matrix.python-version }}
