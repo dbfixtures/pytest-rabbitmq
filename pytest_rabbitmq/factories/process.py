@@ -17,12 +17,8 @@
 # along with pytest-rabbitmq.  If not, see <http://www.gnu.org/licenses/>.
 """RabbitMQ process fixture factory."""
 
+from collections.abc import Callable, Generator, Iterable
 from pathlib import Path
-from typing import (
-    Callable,
-    Generator,
-    Iterable,
-)
 
 import pytest
 from mirakuru.exceptions import ProcessExitedWithError
