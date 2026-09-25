@@ -1,0 +1,2 @@
+Set ``HOME`` to the fixture's temporary directory when it is missing from the environment,
+so RabbitMQ no longer fails with ``erlexec: HOME must be set`` in stripped environments like tox.
