@@ -3,6 +3,43 @@ CHANGELOG
 
 .. towncrier release notes start
 
+pytest-rabbitmq 5.0.0 (2026-10-11)
+==================================
+
+Breaking changes
+----------------
+
+- Drop support for Python 3.10 (`#761 <https://github.com/dbfixtures/pytest-rabbitmq/issues/761>`_)
+
+
+Features
+--------
+
+- Add support for Python 3.15 (`#761 <https://github.com/dbfixtures/pytest-rabbitmq/issues/761>`_)
+
+
+Bugfixes
+--------
+
+- Set ``HOME`` to the fixture's temporary directory when it is missing from the environment,
+  so RabbitMQ no longer fails with ``erlexec: HOME must be set`` in stripped environments like tox. (`#37 <https://github.com/dbfixtures/pytest-rabbitmq/issues/37>`_)
+
+
+Miscellaneus
+------------
+
+- Add zizmor to pre-commit and harden GitHub Actions workflow permissions. (`#738 <https://github.com/dbfixtures/pytest-rabbitmq/issues/738>`_)
+- Add pyproject-fmt to pre-commit (`#739 <https://github.com/dbfixtures/pytest-rabbitmq/issues/739>`_)
+- Migrate dev env and build system to uv (`#740 <https://github.com/dbfixtures/pytest-rabbitmq/issues/740>`_)
+- Add release-schedule workflow replacing manual release workflow. (`#747 <https://github.com/dbfixtures/pytest-rabbitmq/issues/747>`_)
+- Migrated the Automerge workflow to `fizyk/actions-reuse` version 5.8.0. (`#752 <https://github.com/dbfixtures/pytest-rabbitmq/issues/752>`_)
+- Add actionlint to pre-commit (`#753 <https://github.com/dbfixtures/pytest-rabbitmq/issues/753>`_)
+- Configure Dependabot to update pre-commit dependencies. (`#756 <https://github.com/dbfixtures/pytest-rabbitmq/issues/756>`_)
+- Turn off autofix_prs and change pre-commit's autoupdate schedule to quarterly (`#758 <https://github.com/dbfixtures/pytest-rabbitmq/issues/758>`_)
+- Migrate tests to use the new `uv-pytest-coverage` composite action from `actions-reuse`. (`#759 <https://github.com/dbfixtures/pytest-rabbitmq/issues/759>`_)
+- Modernized codebase to Python 3.11 (`#763 <https://github.com/dbfixtures/pytest-rabbitmq/issues/763>`_)
+
+
 pytest-rabbitmq 4.0.0 (2026-03-22)
 ==================================
 
