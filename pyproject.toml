@@ -55,7 +55,7 @@ dev = [
     "mirakuru==3.0.4",
     "mypy==2.4.0; implementation_name=='cpython'",
     "pika==1.4.4",
-    "port-for==1.1.0",
+    "port-for==1.1.1",
     "pytest==9.1.1",
     "pytest-xdist==3.8.0",
     "towncrier==26.9.0",
