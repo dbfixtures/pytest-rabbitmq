@@ -26,7 +26,7 @@ repos:
       - id: debug-statements
 
   - repo: https://github.com/fizyk/pyproject-validator
-    rev: v1.0.0
+    rev: v1.1.0
     hooks:
     -   id: check-python-version-consistency
 
