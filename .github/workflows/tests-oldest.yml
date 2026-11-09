@@ -24,7 +24,7 @@ jobs:
       with:
         persist-credentials: false
     - name: Set up uv with python ${{ matrix.python-version }}
-      uses: fizyk/actions-reuse/.github/actions/uv-setup@723826f1995ca7fd088e1ca408592f275fd7aeee # v5.11.0
+      uses: fizyk/actions-reuse/.github/actions/uv-setup@a8292e61e765f89badf5420420611c3092922421 # v5.11.1
       with:
         python-version: ${{ matrix.python-version }}
     - name: Update apt
@@ -34,17 +34,17 @@ jobs:
       run: |
         sudo apt-get install -y rabbitmq-server
     - name: Install oldest supported versions
-      uses: fizyk/actions-reuse/.github/actions/uv-pip@723826f1995ca7fd088e1ca408592f275fd7aeee # v5.11.0
+      uses: fizyk/actions-reuse/.github/actions/uv-pip@a8292e61e765f89badf5420420611c3092922421 # v5.11.1
       with:
         requirements: oldest/requirements.txt
     - name: Run tests without xdist
-      uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@723826f1995ca7fd088e1ca408592f275fd7aeee # v5.11.0
+      uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@a8292e61e765f89badf5420420611c3092922421 # v5.11.1
       with:
         pytest-opts: -c pyproject.oldest.toml -p no:xdist
         data-file: .coverage.serial
         output-file: coverage-serial.xml
     - name: Run xdist test
-      uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@723826f1995ca7fd088e1ca408592f275fd7aeee # v5.11.0
+      uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@a8292e61e765f89badf5420420611c3092922421 # v5.11.1
       with:
         pytest-opts: -c pyproject.oldest.toml -n auto --max-worker-restart=0
         coverage-config: .coveragerc
