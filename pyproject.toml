@@ -51,7 +51,7 @@ pytest_rabbitmq = "pytest_rabbitmq.plugin"
 
 [dependency-groups]
 dev = [
-    "coverage==7.17.1",
+    "coverage==7.17.2",
     "mirakuru==3.1.0",
     "mypy==2.4.1; implementation_name=='cpython'",
     "pika==1.4.4",
