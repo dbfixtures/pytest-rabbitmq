@@ -555,11 +555,11 @@ wheels = [
 
 [[package]]
 name = "pika"
-version = "1.4.4"
+version = "1.5.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/7f/26/54e0b98a7f60b474cb0a6c05ecf048d4bc8c866e10ab1c82bc83865e7421/pika-1.4.4.tar.gz", hash = "sha256:8cfc8b33a5cb16e733bd60cffca9732c0d1d761ecd80a89f34ed7df2cd38d6d6", size = 154713, upload-time = "2026-08-06T21:33:39.836Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b5/5b/0970a9bcdff70c87ad81a3bdb38bdc500e8ffc11427d9f8716c00e8321de/pika-1.5.0.tar.gz", hash = "sha256:339afb9b2f55b31e03ebd1d96308e72e1d1d8e0e2c4ccea57d0f3d72fd10f333", size = 199837, upload-time = "2026-11-17T15:57:48.769Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7c/f3/921170b78779ac3f8b405cb28fce88acca1562ac114072cbf0a115e19bb9/pika-1.4.4-py3-none-any.whl", hash = "sha256:48de960c97a93b55db06b8be4c53eb977c9c8a2754c57cdae9097abcbd70ce04", size = 165275, upload-time = "2026-08-06T21:33:38.449Z" },
+    { url = "https://files.pythonhosted.org/packages/d7/f5/9af08e02515a20341791263501c60c4ed099f3e429b77451da04a5ef1f99/pika-1.5.0-py3-none-any.whl", hash = "sha256:bc474e3ffbfd8aeafa0ae05709e54b6d4bda13cb4cfeed8a8413df71e0f7f97a", size = 209891, upload-time = "2026-11-17T15:57:47.607Z" },
 ]
 
 [[package]]
@@ -672,7 +672,7 @@ dev = [
     { name = "coverage", specifier = "==7.17.3" },
     { name = "mirakuru", specifier = "==3.1.0" },
     { name = "mypy", marker = "implementation_name == 'cpython'", specifier = "==2.4.1" },
-    { name = "pika", specifier = "==1.4.4" },
+    { name = "pika", specifier = "==1.5.0" },
     { name = "port-for", specifier = "==1.1.1" },
     { name = "pytest", specifier = "==9.2.0" },
     { name = "pytest-xdist", specifier = "==3.8.0" },
